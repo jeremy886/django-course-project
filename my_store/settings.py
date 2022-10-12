@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'newsletter.apps.NewsletterConfig',
     'products.apps.ProductsConfig',
     'users.apps.UsersConfig',
+    'carts.apps.CartsConfig',
 ]
 
 MIDDLEWARE = [
