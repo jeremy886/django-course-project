@@ -1,3 +1,5 @@
+{% url "about" as about_url %}
+{% url "newsletter:subscribe" as newsletter_url %}
 <nav class="navbar navbar-expand-md bg-light">
     <div class="container-fluid">
         <a class="navbar-brand" href="/">Store</a>
@@ -10,10 +12,10 @@
                     <a class="nav-link{% if request.path == '/' %} active{% endif %}" aria-current="page" href="/">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link{% if request.path == '/newsletter/' %} active{% endif %}" href="/newsletter/">Newsletter</a>
+                    <a class="nav-link{% if request.path == newsletter_url %} active{% endif %}" href="{{ newsletter_url }}">Newsletter</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link{% if request.path == '/about/' %} active{% endif %}" href="/about/">About</a>
+                    <a class="nav-link{% if request.path == about_url %} active{% endif %}" href="{{ about_url }}">About</a>
                 </li>
             </ul>
             <ul class="navbar-nav ms-auto">

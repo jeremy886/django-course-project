@@ -20,7 +20,7 @@ from .views import AboutView, HomeView
 
 
 urlpatterns = [
-    path('about/', AboutView.as_view()),
+    path('about/', AboutView.as_view(), name='about'),
     path('', HomeView.as_view()),
     path('', include('newsletter.urls')),
     path('', include('products.urls')),
