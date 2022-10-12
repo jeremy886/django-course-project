@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<h2>{{ product.name }}</h2>
+{% endblock header %}
+
+{% block content %}
+
+    <p>
+    {{ product.description }}
+    </p>
+
+    <p><strong>Price</strong>: ${{ product.price }}</p>
+
+{% endblock content %}
