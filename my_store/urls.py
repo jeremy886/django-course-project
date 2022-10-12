@@ -16,12 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from .views import newsletter
+from .views import newsletter, about, home
 
 
 urlpatterns = [
     path('newsletter/', newsletter),
-    path('about/', newsletter),  # TODO point this to its own view
-    path('', newsletter),  # TODO point this to its own view
+    path('about/', about),
+    path('', home),
     path('admin/', admin.site.urls),
 ]
