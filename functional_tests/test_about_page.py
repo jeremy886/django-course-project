@@ -1,9 +1,9 @@
-from django.test import TestCase
+from .testcases import SplinterTestCase
 
 
-class AboutPageTest(TestCase):
+class AboutPageTest(SplinterTestCase):
 
     def test_correct_status_and_page_content(self):
-        response = self.client.get('/about/')
-        self.assertEqual(response.status_code, 200)
-        self.assertContains(response, 'We were founded in 2022')
+        self.browser.visit(f"{self.live_server_url}/about/")
+        self.assertEqual(self.browser.status_code, 200)
+        assert self.browser.is_text_present('We were founded in 2022')

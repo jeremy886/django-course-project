@@ -1,9 +1,9 @@
-from django.test import TestCase
-
 from products.models import Product
 
+from .testcases import SplinterTestCase
 
-class ProductListPageTest(TestCase):
+
+class ProductListPageTest(SplinterTestCase):
 
     def test_all_products_shown(self):
         duck = Product.objects.create(
@@ -16,11 +16,11 @@ class ProductListPageTest(TestCase):
             description="A computer mouse",
             price=8.50,
         )
-        response = self.client.get('/products/')
-        self.assertEqual(response.status_code, 200)
-        self.assertContains(response, duck.name)
-        self.assertContains(response, duck.description)
-        self.assertContains(response, duck.price)
-        self.assertContains(response, mouse.name)
-        self.assertContains(response, mouse.description)
-        self.assertContains(response, mouse.price)
+        self.browser.visit(f"{self.live_server_url}/products/")
+        self.assertEqual(self.browser.status_code, 200)
+        assert self.browser.is_text_present(duck.name)
+        assert self.browser.is_text_present(duck.description)
+        assert self.browser.is_text_present(f"{duck.price}")
+        assert self.browser.is_text_present(mouse.name)
+        assert self.browser.is_text_present(mouse.description)
+        assert self.browser.is_text_present(f"{mouse.price}")
