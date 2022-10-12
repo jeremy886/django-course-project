@@ -24,3 +24,12 @@ class ProductDetailPageTest(TestCase):
         self.assertNotContains(response, mouse.name)
         self.assertNotContains(response, mouse.description)
         self.assertNotContains(response, mouse.price)
+
+    def test_missing_product(self):
+        duck = Product.objects.create(
+            name="duck",
+            description="Adorable rubber duck",
+            price=1.25,
+        )
+        response = self.client.get(f'/products/{duck.id+1}/')
+        self.assertEqual(response.status_code, 404)
