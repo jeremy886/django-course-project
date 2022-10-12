@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import BaseUserManager
+from django.contrib.auth.models import BaseUserManager, PermissionsMixin
 from django.contrib.auth.base_user import AbstractBaseUser
 
 
@@ -23,10 +23,11 @@ class UserManager(BaseUserManager):
             password,
             **extra_fields,
             is_staff=True,
+            is_superuser=True,
         )
 
 
-class User(AbstractBaseUser):
+class User(PermissionsMixin, AbstractBaseUser):
 
     """Custom User model with email address as username."""
 
