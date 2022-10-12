@@ -11,4 +11,4 @@ def about(request):
 
 
 def home(request):
-    return HttpResponse("Welcome to the store. This is our homepage.")
+    return render(request, 'home.html')
