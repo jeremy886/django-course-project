@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import DetailView
+from django.views.generic import DetailView, ListView
 
 from .models import Product
 
@@ -10,7 +10,7 @@ class ProductDetailView(DetailView):
     template_name = 'product_details.html'
 
 
-def product_list(request):
-    return render(request, 'product_list.html', {
-        'products': Product.objects.all(),
-    })
+class ProductListView(ListView):
+    model = Product
+    template_name = 'product_list.html'
+    context_object_name = 'products'
