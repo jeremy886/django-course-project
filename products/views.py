@@ -8,3 +8,9 @@ def product_details(request, product_id):
     return render(request, 'product_details.html', {
         'product': product,
     })
+
+
+def product_list(request):
+    return render(request, 'product_list.html', {
+        'products': Product.objects.all(),
+    })
