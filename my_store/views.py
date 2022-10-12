@@ -1,8 +1,10 @@
 from django.http import HttpResponse
+from django.template.loader import get_template
 
 
 def newsletter(request):
-    return HttpResponse("Subscribe to our newsletter")
+    template = get_template('newsletter.html')
+    return HttpResponse(template.render())
 
 
 def about(request):
