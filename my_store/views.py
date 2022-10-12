@@ -1,10 +1,9 @@
 from django.http import HttpResponse
-from django.template.loader import get_template
+from django.shortcuts import render
 
 
 def newsletter(request):
-    template = get_template('newsletter.html')
-    return HttpResponse(template.render())
+    return render(request, 'newsletter.html')
 
 
 def about(request):
