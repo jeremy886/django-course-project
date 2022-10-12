@@ -12,9 +12,13 @@
 
     <p><strong>Price</strong>: ${{ product.price }}</p>
 
+    {% if user.is_authenticated %}
     <form action="{% url "carts:add" product.pk %}" method="post">
         {% csrf_token %}
         <button type="submit" class="btn btn-primary">Add to Cart</button>
     </form>
+    {% else %}
+    <a href="{% url "users:login" %}?next={{ request.get_full_path }}" class="btn btn-primary">Login to Add to Cart</a>
+    {% endif %}
 
 {% endblock content %}

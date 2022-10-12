@@ -6,6 +6,29 @@ from .testcases import SplinterTestCase
 
 class AddToCartPageTest(SplinterTestCase):
 
+    def test_unauthenticated_user(self):
+        user = User.objects.create_user(
+            email="roselyn@wheeler.com",
+            password="password",
+        )
+        duck = Product.objects.create(
+            name="duck",
+            description="Adorable rubber duck",
+            price=1.25,
+        )
+
+        # User visits duck page and adds item to cart
+        self.visit(duck.get_absolute_url())
+        assert self.browser.is_text_not_present("Logout")
+        assert not self.browser.is_element_present_by_text("Add to Cart")
+        self.browser.find_by_text("Login to Add to Cart").click()
+        self.browser.fill("username", user.email)
+        self.browser.fill("password", "password")
+        self.browser.find_by_css("button[type=submit]").click()
+        self.assertEqual(self.browser.url, duck.get_absolute_url())
+        assert self.browser.is_element_present_by_text("Add to Cart")
+        assert self.browser.is_text_present("Logout")
+
     def test_user_adds_multiple_items_to_cart(self):
         duck = Product.objects.create(
             name="duck",
