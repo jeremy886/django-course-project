@@ -1,5 +1,6 @@
 from django.test import TestCase
 
+from .forms import SubscriberForm
 from .models import Subscriber
 
 
@@ -23,3 +24,31 @@ class SubscriberModelTests(TestCase):
         subscriber = Subscriber(name=name, email=email)
         subscriber.save()
         self.assertEqual(str(subscriber), email)
+
+
+class SubscriberFormTest(TestCase):
+
+    """Tests for SubscriberForm."""
+
+    def test_empty(self):
+        form = SubscriberForm()
+        self.assertEqual(form.data, {})
+        self.assertFalse(form.is_valid())
+
+    def test_name_but_no_email(self):
+        data = {'name': "Mae Mahoney"}
+        form = SubscriberForm(data)
+        self.assertEqual(form.data, data)
+        self.assertFalse(form.is_valid())
+
+    def test_email_but_no_name(self):
+        data = {'email': "mae@mahoney.com"}
+        form = SubscriberForm(data)
+        self.assertEqual(form.data, data)
+        self.assertTrue(form.is_valid())
+
+    def test_email_and_name(self):
+        data = {'email': "mae@mahoney.com", 'name': "Mae Mahoney"}
+        form = SubscriberForm(data)
+        self.assertEqual(form.data, data)
+        self.assertTrue(form.is_valid())
