@@ -6,14 +6,14 @@ from .testcases import SplinterTestCase
 class NewsletterPageTest(SplinterTestCase):
 
     def test_correct_status_and_page_content(self):
-        self.browser.visit(f"{self.live_server_url}/newsletter/")
+        self.visit("newsletter:subscribe")
         self.assertEqual(self.browser.status_code, 200)
         assert self.browser.is_text_present("Sign up for our newsletter")
 
     def test_valid_newsletter_signup(self):
         # Navigate to newsletter page
         email = "bryce@tyree.com"
-        self.browser.visit(f"{self.live_server_url}/newsletter/")
+        self.visit("newsletter:subscribe")
 
         # Enter email and submit form
         self.browser.fill("email", email)
