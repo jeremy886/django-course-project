@@ -1,6 +1,7 @@
 {% url "home" as home_url %}
 {% url "about" as about_url %}
 {% url "newsletter:subscribe" as newsletter_url %}
+{% url "carts:cart" as cart_url %}
 <nav class="navbar navbar-expand-md bg-light">
     <div class="container-fluid">
         <a class="navbar-brand" href="{{ home_url }}">Store</a>
@@ -22,6 +23,9 @@
             <ul class="navbar-nav ms-auto">
                 {% if user.is_authenticated %}
                 <li class="navbar-text me-4">👤 {{ user.email }}</li>
+                <li class="nav-item">
+                    <a class="nav-link{% if request.path == cart_url %} active{% endif %}" href="{{ cart_url }}">Cart</a>
+                </li>
                 {% endif %}
                 {% if user.is_authenticated %}
                 <li class="nav-item">

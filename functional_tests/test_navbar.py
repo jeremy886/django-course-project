@@ -1,5 +1,7 @@
 from .testcases import SplinterTestCase
 
+from users.models import User
+
 
 class NavbarTest(SplinterTestCase):
 
@@ -23,3 +25,15 @@ class NavbarTest(SplinterTestCase):
             self.reverse("newsletter:subscribe"),
         )
         assert not newsletter_link.has_class("active")  # Link is active
+
+    def test_clicking_cart_link(self):
+        """Test Cart link URL and active state work correctly."""
+        user = User.objects.create_user(email="tom@chan.com", password="1234")
+        self.visit("home")  # Visit homepage
+        assert not self.browser.is_element_present_by_text("Cart")  # No link
+        self.login(user.email, "1234")
+        cart_link = self.browser.find_by_text("Cart")
+        assert not cart_link.has_class("active")  # Cart link isn't active
+        cart_link.click()  # Click Cart link
+        self.assertEqual(self.browser.url, self.reverse("carts:cart"))
+        assert not cart_link.has_class("active")  # Cart link is active
