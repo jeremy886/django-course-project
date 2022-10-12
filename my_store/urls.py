@@ -24,5 +24,6 @@ def newsletter(request):
 
 urlpatterns = [
     path('newsletter/', newsletter),
+    path('about/', newsletter),  # TODO point this to its own view
     path('admin/', admin.site.urls),
 ]
