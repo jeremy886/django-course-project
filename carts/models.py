@@ -10,6 +10,9 @@ class Cart(models.Model):
         on_delete=models.CASCADE,
     )
 
+    def __str__(self):
+        return f"Cart for {self.user}"
+
 
 class CartItem(models.Model):
     """Model representing a single item in a shopping cart."""
