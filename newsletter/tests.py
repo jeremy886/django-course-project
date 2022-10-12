@@ -40,6 +40,9 @@ class SubscriberFormTest(TestCase):
         form = SubscriberForm(data)
         self.assertEqual(form.data, data)
         self.assertFalse(form.is_valid())
+        self.assertEqual(form.errors, {
+            "email": ["This field is required."],
+        })
 
     def test_email_but_no_name(self):
         data = {'email': "mae@mahoney.com"}
