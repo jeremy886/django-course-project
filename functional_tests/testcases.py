@@ -17,5 +17,8 @@ class SplinterTestCase(StaticLiveServerTestCase):
         return reverse(url_name, args=args, kwargs=kwargs)
 
     def visit(self, url_name, *args, **kwargs):
-        url = self.reverse(url_name, *args, **kwargs)
+        if url_name.startswith("/") and not args and not kwargs:
+            url = url_name
+        else:
+            url = self.reverse(url_name, *args, **kwargs)
         self.browser.visit(f"{self.live_server_url}{url}")
