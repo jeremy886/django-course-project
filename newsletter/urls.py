@@ -1,6 +1,6 @@
 from django.urls import path
-from .views import newsletter
+from .views import NewsletterView
 
 urlpatterns = [
-    path('newsletter/', newsletter),
+    path('newsletter/', NewsletterView.as_view()),
 ]

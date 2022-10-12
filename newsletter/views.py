@@ -1,20 +1,13 @@
-from django.contrib import messages
-from django.shortcuts import redirect, render
+from django.contrib.messages.views import SuccessMessageMixin
+from django.views.generic import CreateView
 
 from .forms import SubscriberForm
 from .models import Subscriber
 
 
-def newsletter(request):
-    if request.method == "POST":
-        form = SubscriberForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(
-                request,
-                "Thanks for signing up to our newsletter!",
-            )
-            return redirect("/")
-    else:
-        form = SubscriberForm()
-    return render(request, "newsletter.html", {"form": form})
+class NewsletterView(SuccessMessageMixin, CreateView):
+    model = Subscriber
+    form_class = SubscriberForm
+    template_name = "newsletter.html"
+    success_url = "/"
+    success_message = "Thanks for signing up to our newsletter!"

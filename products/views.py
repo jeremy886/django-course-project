@@ -1,13 +1,13 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render
+from django.views.generic import DetailView
 
 from .models import Product
 
 
-def product_details(request, product_id):
-    product = get_object_or_404(Product, pk=product_id)
-    return render(request, 'product_details.html', {
-        'product': product,
-    })
+class ProductDetailView(DetailView):
+    model = Product
+    pk_url_kwarg = 'product_id'
+    template_name = 'product_details.html'
 
 
 def product_list(request):
