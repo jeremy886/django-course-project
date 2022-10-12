@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load widget_tweaks %}
+
 {% block title %}Login -- My Store{% endblock %}
 
 {% block header %}
@@ -7,9 +9,36 @@
 {% endblock header %}
 
 {% block content %}
-   <form method="post">
-       {% csrf_token %}
-       {{ form.as_p }}
-       <button type="submit">Login</button>
-   </form>
+    <form method="post" class="col-lg-9 col-xl-6">
+        {% csrf_token %}
+
+        <div class="text-danger">
+            {% for error in form.non_field_errors %}
+                {{ error }}
+            {% endfor %}
+        </div>
+
+
+        <div class="mb-3">
+            <label for="id_username" class="form-label">Email address</label>
+            {% render_field form.username class+="form-control" %}
+            <div class="invalid-feedback">
+                {% for error in form.username.errors %}
+                    {{ error }}
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="id_password" class="form-label">Password</label>
+            {% render_field form.password class+="form-control" %}
+            <div class="invalid-feedback">
+                {% for error in form.password.errors %}
+                    {{ error }}
+                {% endfor %}
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Login</button>
+    </form>
 {% endblock content %}
