@@ -16,6 +16,13 @@
                     <a class="nav-link{% if request.path == '/about/' %} active{% endif %}" href="/about/">About</a>
                 </li>
             </ul>
+            <ul class="navbar-nav ms-auto">
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <span class="navbar-text">{{ user.email }}</span>
+                </li>
+                {% endif %}
+            </ul>
         </div>
     </div>
 </nav>
