@@ -52,3 +52,11 @@ class SubscriberFormTest(TestCase):
         form = SubscriberForm(data)
         self.assertEqual(form.data, data)
         self.assertTrue(form.is_valid())
+
+    def test_save(self):
+        data = {'email': "mae@mahoney.com", 'name': "Mae Mahoney"}
+        form = SubscriberForm(data)
+        self.assertTrue(form.is_valid())
+        subscriber = form.save()
+        self.assertEqual(subscriber.name, data['name'])
+        self.assertEqual(subscriber.email, data['email'])
