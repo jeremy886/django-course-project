@@ -6,7 +6,10 @@ from .models import User
 class RegistrationForm(forms.ModelForm):
     """Form to register a new user."""
 
-    password = forms.CharField(strip=False)
+    password = forms.CharField(
+        strip=False,
+        widget=forms.PasswordInput(attrs={"autocomplete": "new-password"}),
+    )
 
     class Meta:
         model = User
@@ -16,9 +19,6 @@ class RegistrationForm(forms.ModelForm):
                 "autofocus": True,
                 "autocapitalize": "none",
                 "autocomplete": "email",
-            }),
-            "password": forms.PasswordInput(attrs={
-                "autocomplete": "new-password",
             }),
         }
 
