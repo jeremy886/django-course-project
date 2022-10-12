@@ -2,8 +2,11 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.views.generic import DetailView, ListView
+from rest_framework.generics import RetrieveUpdateDestroyAPIView
+
 
 from carts.models import Cart
+from carts.serializers import CartItemSerializer
 from products.models import Product
 
 
@@ -33,3 +36,11 @@ class AddToCartView(LoginRequiredMixin, DetailView):
             item.save()
         messages.success(request, f"Added {product.name} to cart")
         return redirect("carts:cart")
+
+
+class CartItemView(RetrieveUpdateDestroyAPIView):
+    serializer_class = CartItemSerializer
+
+    def get_queryset(self):
+        cart, created = Cart.objects.get_or_create(user=self.request.user)
+        return cart.items.all()
