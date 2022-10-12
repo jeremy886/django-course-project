@@ -1,4 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib import messages
+from django.shortcuts import redirect
 from django.views.generic import DetailView, ListView
 
 from carts.models import Cart
@@ -22,6 +24,12 @@ class AddToCartView(LoginRequiredMixin, DetailView):
     def post(self, request, product_id):
         product = self.get_object()
         cart, created = Cart.objects.get_or_create(user=request.user)
-        # TODO Add product to cart OR update product quantity (if it's already in the cart)
-        # TODO show success message
-        # TODO redirect to user's shopping cart page
+        item, created = cart.items.get_or_create(
+            product=product,
+            defaults={'quantity': 1},
+        )
+        if not created:
+            item.quantity += 1
+            item.save()
+        messages.success(request, f"Added {product.name} to cart")
+        return redirect("carts:cart")
