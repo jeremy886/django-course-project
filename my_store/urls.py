@@ -16,11 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from .views import about, HomeView
+from .views import AboutView, HomeView
 
 
 urlpatterns = [
-    path('about/', about),
+    path('about/', AboutView.as_view()),
     path('', HomeView.as_view()),
     path('', include('newsletter.urls')),
     path('', include('products.urls')),
