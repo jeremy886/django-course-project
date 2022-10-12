@@ -1,4 +1,3 @@
-from django.http import HttpResponse
 from django.shortcuts import render
 
 
@@ -7,7 +6,7 @@ def newsletter(request):
 
 
 def about(request):
-    return HttpResponse("About us: we run this store")
+    return render(request, 'about.html')
 
 
 def home(request):
