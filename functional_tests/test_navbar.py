@@ -11,3 +11,12 @@ class NavbarTest(SplinterTestCase):
         about_link.click()  # Click About link
         self.assertEqual(self.browser.url, "/about/")
         assert not about_link.has_class("active")  # About link is active
+
+    def test_clicking_newsletter_link(self):
+        """Test Newsletter link URL and active state work correctly."""
+        self.browser.visit(self.live_server_url)  # Visit homepage
+        newsletter_link = self.browser.find_by_text("Newsletter")
+        assert not newsletter_link.has_class("active")  # Link isn't active
+        newsletter_link.click()  # Click link
+        self.assertEqual(self.browser.url, "/newsletter/")
+        assert not newsletter_link.has_class("active")  # Link is active
