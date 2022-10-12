@@ -5,13 +5,78 @@
 {% endblock header %}
 
 {% block content %}
+{% csrf_token %}
 <table class="table">
     <thead>
         <tr><th>Product</th><th>Quantity</th><th>Cost</th></tr>
     </thead>
-    <tbody>
+    <tbody x-data="{
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': document.querySelector('input[name=csrfmiddlewaretoken]').value,
+        },
+    }">
         {% for item in items %}
-        <tr><td><a href="{{ item.product.get_absolute_url }}">{{ item.product.name }}</a></td><td>{{ item.quantity }}</td><td>${{ item.product.price }}</td></tr>
+        <tr
+            x-data="{
+                url: $el.dataset.url,
+                row: $el,
+                disabled: false,
+                async update(value) {
+                    const response = await fetch(this.url, {
+                        method: 'PUT',
+                        body: JSON.stringify({quantity: value}),
+                        headers: this.headers,
+                    });
+                    if (response.ok) {
+                        this.disabled = false;
+                    } else {
+                        alert('Error updating the quantity');
+                    }
+                },
+                async remove() {
+                    const response = await fetch(this.url, {
+                        method: 'DELETE',
+                        headers: this.headers,
+                    });
+                    if (response.ok) {
+                        this.row.remove();
+                    } else {
+                        alert('Error deleting item')
+                    }
+                },
+            }"
+            data-url="{% url "carts:item" item.pk %}"
+        >
+            <td><a href="{{ item.product.get_absolute_url }}">{{ item.product.name }}</a></td>
+            <td class="row row-cols-auto">
+                <div class="col">
+                    <input
+                        type="number"
+                        min="1"
+                        required
+                        name="quantity"
+                        value="{{ item.quantity }}"
+                        class="form-control form-control-sm mr-sm-2"
+                        x-bind:disabled="disabled"
+                        x-on:change="
+                            if ($el.validity.valid) {
+                                disabled = true;
+                                update($el.value);
+                            }
+                        "
+                    >
+                </div>
+                <div class="col">
+                    <button
+                        name="delete"
+                        class="col btn btn-sm btn-outline-danger"
+                        x-on:click.prevent="remove()"
+                    >Delete</button>
+                </div>
+            </td>
+            <td>${{ item.product.price }}</td>
+        </tr>
         {% endfor %}
     </tbody>
 </table>
