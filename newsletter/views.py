@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.shortcuts import redirect, render
 
 from .forms import SubscriberForm
@@ -12,6 +13,10 @@ def newsletter(request):
             email = form.cleaned_data["email"]
             subscriber = Subscriber(name=name, email=email)
             subscriber.save()
+            messages.success(
+                request,
+                "Thanks for signing up to our newsletter!",
+            )
             return redirect("/")
     else:
         form = SubscriberForm()

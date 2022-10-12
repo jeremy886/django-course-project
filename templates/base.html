@@ -8,6 +8,15 @@
     </head>
     <body class="d-flex flex-column h-100">
         {% include '_navbar.html' %}
+        {% if messages %}
+        <div class="container mt-3">
+            {% for message in messages %}
+            <div{% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %} role="alert">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
         <header class="container py-3">
             {% block header %}{% endblock %}
         </header>
