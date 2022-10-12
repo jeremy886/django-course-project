@@ -23,3 +23,6 @@ class CartItem(models.Model):
     )
     product = models.ForeignKey("products.Product", on_delete=models.CASCADE)
     quantity = models.PositiveSmallIntegerField()
+
+    def __str__(self):
+        return f"{self.product} (x{self.quantity})"
