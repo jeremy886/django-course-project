@@ -15,3 +15,11 @@ class SubscriberModelTests(TestCase):
         subscriber.save()
         self.assertEqual(subscriber.name, name)
         self.assertEqual(subscriber.email, email)
+
+    def test_string_representation(self):
+        """Check Subscriber string representation."""
+        name = "Mary Sutton"
+        email = "mary@sutton.name"
+        subscriber = Subscriber(name=name, email=email)
+        subscriber.save()
+        self.assertEqual(str(subscriber), email)
