@@ -13,5 +13,9 @@ class SplinterTestCase(StaticLiveServerTestCase):
         self.browser.quit()
         super().tearDown()
 
-    def visit(self, url_name):
-        self.browser.visit(f"{self.live_server_url}{reverse(url_name)}")
+    def reverse(self, url_name, *args, **kwargs):
+        return reverse(url_name, args=args, kwargs=kwargs)
+
+    def visit(self, url_name, *args, **kwargs):
+        url = self.reverse(url_name, *args, **kwargs)
+        self.browser.visit(f"{self.live_server_url}{url}")

@@ -10,12 +10,12 @@ class RegisterTest(SplinterTestCase):
             email="darnell@marsh.com",
             password="tuesday votes nickname wood",
         )
-        self.browser.visit(self.live_server_url)  # Visit homepage
+        self.visit("home")  # Visit homepage
         self.browser.find_by_text("Register").click()  # Click Register
         self.browser.fill("email", user.email)
         self.browser.fill("password", "tuesday votes nickname wood")
         self.browser.find_by_css("button[type=submit]").click()
-        self.assertEqual(self.browser.url, "/register/")
+        self.assertEqual(self.browser.url, self.reverse("users:register"))
         assert self.browser.is_text_present(
             "User with this Email address already exists."
         )
@@ -23,11 +23,11 @@ class RegisterTest(SplinterTestCase):
         assert self.browser.is_text_present("Register")
 
     def test_valid_registration(self):
-        self.browser.visit(self.live_server_url)  # Visit homepage
+        self.visit("home")  # Visit homepage
         self.browser.find_by_text("Register").click()  # Click Register
         self.browser.fill("email", "darnell@marsh.com")
         self.browser.fill("password", "tuesday votes nickname wood")
         self.browser.find_by_css("button[type=submit]").click()
-        self.assertEqual(self.browser.url, "/")
+        self.assertEqual(self.browser.url, self.reverse("home"))
         assert self.browser.is_text_present("Logout")
         assert self.browser.is_text_not_present("Register")

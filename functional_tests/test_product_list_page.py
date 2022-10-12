@@ -16,7 +16,7 @@ class ProductListPageTest(SplinterTestCase):
             description="A computer mouse",
             price=8.50,
         )
-        self.browser.visit(f"{self.live_server_url}/products/")
+        self.visit("products:list")
         self.assertEqual(self.browser.status_code, 200)
         assert self.browser.is_text_present(duck.name)
         assert self.browser.is_text_present(duck.description)

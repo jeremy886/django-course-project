@@ -10,12 +10,12 @@ class LoginTest(SplinterTestCase):
             email="kathleen@grenier.com",
             password="my secret password",
         )
-        self.browser.visit(self.live_server_url)  # Visit homepage
+        self.visit("home")  # Visit homepage
         self.browser.find_by_text("Login").click()  # Click Login
         self.browser.fill("username", user.email)
         self.browser.fill("password", "invalid")
         self.browser.find_by_css("button[type=submit]").click()
-        self.assertEqual(self.browser.url, "/login/")
+        self.assertEqual(self.browser.url, self.reverse("users:login"))
         assert self.browser.is_text_present(
             "Please enter a correct email address and password."
         )
@@ -27,11 +27,11 @@ class LoginTest(SplinterTestCase):
             email="kathleen@grenier.com",
             password="my secret password",
         )
-        self.browser.visit(self.live_server_url)  # Visit homepage
+        self.visit("home")  # Visit homepage
         self.browser.find_by_text("Login").click()  # Click Login
         self.browser.fill("username", user.email)
         self.browser.fill("password", "my secret password")
         self.browser.find_by_css("button[type=submit]").click()
-        self.assertEqual(self.browser.url, "/")
+        self.assertEqual(self.browser.url, self.reverse("home"))
         assert self.browser.is_text_present("Logout")
         assert self.browser.is_text_not_present("Login")
